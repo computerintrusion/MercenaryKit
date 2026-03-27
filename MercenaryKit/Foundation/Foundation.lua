@@ -1,13 +1,6 @@
 --[[
 
     @computerintrusion  03-26-2026
-
-    TODO: compiling or merging files
-
-    currently, instead of creating one big file, we 'import' our dependencies via github link. 
-    this is slow and far from optimal, i want to implement a way to compile the files into
-    one large file, so we can locally use it instead
-
 ]]
 
 --[[micro optimization]]
