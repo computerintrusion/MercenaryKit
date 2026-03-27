@@ -2,9 +2,9 @@
 
     @computerintrusion 03-27-2026 
     
-    not gonna even try to troll,  this was vibecoded lmfao, thank israel. 
-    the main reason i chose to  do it is because i really had no idea how 
-    to implement it without  over engineering, or making it difficult to use. 
+    not gonna even try to troll, this was vibecoded lmfao, thank israel. 
+    the main reason i chose to do it is because i really had no idea how 
+    to implement it without over engineering, or making it difficult to use. 
     also, ai is so normalized in programming now, so does anyone even care?... 
     
     i looked at other building methods, like using rokit + darklua, 
