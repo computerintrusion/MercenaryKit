@@ -20,7 +20,7 @@ local localPlayer = services.Players.LocalPlayer;
 print(localPlayer.Name);
 
 -- usage for utilities
-local hash = foundation.utilities.hash;
+local hash = mercenaryFramework.utilities.hash;
 print(hash.sha3_256(localPlayer.Name));
 ```
 
@@ -30,7 +30,7 @@ print(hash.sha3_256(localPlayer.Name));
   - at least don't claim you created the idea, or if you modify the source but use this as a base, at least credit me for originality.
   - fork this if you use it. no promises that i won't private or delete the repository
 
-  - average execution time analytics: 1.069917812347412 seconds (need to improve!)
+  - average execution time analytics: 1.930784 seconds (critical)
 
 ## **TODO (number one priority currently)**:
   - implement a 'compile' method, so instead of using 'Foundation/Foundation.lua', which imports files from the github itself, it compiles the entire project into one usable file which i can add to Releases.  i have found a way of doing this, just need to implement it properly, until then i won't be using it.
