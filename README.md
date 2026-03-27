@@ -19,7 +19,11 @@ notes (information for skids or contributers):
   - not only will this make it faster, but also more easily manageable in the end.
 
 simple usage example:
-  - if this framework gets big, i eventually will create a docs for it. for now, here is an example.
-  ```lua
-      --placeholder
-  ```
+  - if this framework gets big, i eventually will create a docs for it. for now, here is a simple example.
+```lua
+local mercenaryFramework = loadstring(request({Url = 'https://github.com/computerintrusion/MercenaryKit/raw/refs/heads/main/MercenaryKit/Foundation/Foundation.lua', Method = 'GET'}).Body)();
+
+local services = mercenaryFramework.serviceManager; -- we do this for easier readability
+local localPlayer = services.Players.LocalPlayer; -- you can also use services.getService("Players");
+print(localPlayer.Name);
+```
