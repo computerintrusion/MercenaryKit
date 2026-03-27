@@ -1,7 +1,8 @@
 # MercenaryKit
 
-a never complete framework for Mercenary X.
+the never complete framework for Mercenary X
 it includes my custom implementations and helpers of many features that can assist you to create an entire script hub
+designed to be used in an executor environment, not a game, however feel free to take specific modules if you see a use in your game
 
 the idea is that eventually, you will never need any of your own implementations, and can rely on this for everything.
 i will update this as frequently as i can, and will focus on creating a fast framework which relies on speed and easy usability
