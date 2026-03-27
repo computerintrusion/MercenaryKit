@@ -32,6 +32,6 @@ print(hash.sha3_256(localPlayer.Name));
   - fork this if you use it. no promises that i won't private or delete the repository
 
 ## building your own version
-  - step one: `lua BuildMercenaryKit.lua`, a compiled file gets generated in your directly
+  - step one: `lua BuildMercenaryKit.lua`, a compiled file gets generated in your directory
   - step two: use the file that was generated as required!
   
