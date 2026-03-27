@@ -11,7 +11,7 @@ i will update this as frequently as i can, and will focus on creating a fast fra
   - if this framework gets big or people end up using it or care much about it, i eventually will create a docs for it. until then, i know how to use my own framework so what is the point of creating documentation
 ```lua
 -- init our framework
-local mercenaryFramework = loadstring(request({Url = 'https://github.com/computerintrusion/MercenaryKit/releases/download/v1.1.1/MercenaryKit.lua', Method = 'GET'}).Body)();
+local mercenaryFramework = loadstring(request({Url = 'https://github.com/computerintrusion/MercenaryKit/releases/download/v1.1.1_RELEASE/MercenaryKit.lua', Method = 'GET'}).Body)();
 
 -- we do this for easier readability
 local services = mercenaryFramework.serviceManager;
