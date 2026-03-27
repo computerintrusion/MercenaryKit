@@ -26,7 +26,6 @@ print(hash.sha3_256(localPlayer.Name));
 ```
 
 ## notes (information for skids or contributers):
-  - everything was created and tested on a mac, which means that it MAY not support Windows. if you have any issues while attempting to execute on Windows, please create an issue report regarding the issue (screenshot of issue, etc).
   - i don't really care if you use this in your project, but i do want some credibility 
   - at least don't claim you created the idea, or if you modify the source but use this as a base, at least credit me for originality.
   - fork this if you use it. no promises that i won't private or delete the repository
