@@ -1,8 +1,8 @@
 --[[
 
-    not made by me
+	not made by me
 
-    https://github.com/mainstreamed/mainstreamed/blob/main/modules/signalHandler.lua
+	https://github.com/mainstreamed/mainstreamed/blob/main/modules/signalHandler.lua
 ]]
 
 local table_insert            = table.insert;
@@ -13,53 +13,53 @@ local signalHandler           = {};
 signalHandler.__index 		= signalHandler;
 
 signalHandler.new = function(signal)
-      local self = setmetatable({ 
+	local self = setmetatable({ 
 
-            active      = true;
-            signal      = signal;
+		active      = true;
+		signal      = signal;
 
-            connections = {};
-      }, signalHandler);
+		connections = {};
+	}, signalHandler);
 
 
-      if (self.signal) then
-            self.signalConnection = self.signal:Connect(function(...) self:Fire(...); end);
-      end;
+	if (self.signal) then
+		self.signalConnection = self.signal:Connect(function(...) self:Fire(...); end);
+	end;
 
-      return self;
+	return self;
 end;
 
 function signalHandler:Fire(...)
-      local connections = self.connections;
-      for i = 1, #connections do
-            task.spawn(connections[i], ...);
-      end;
+	local connections = self.connections;
+	for i = 1, #connections do
+		task.spawn(connections[i], ...);
+	end;
 end;
 function signalHandler:Connect(_function)
-      local connectionObject = {};
+	local connectionObject = {};
 
-      connectionObject.Connected = true;
-      connectionObject.Disconnect = function()
-            if (not connectionObject.Connected) then
-                  return;
-            end;
-            connectionObject.Connected = false;
-            table_remove( self.connections, table_find(self.connections, _function) );
-      end;
+	connectionObject.Connected = true;
+	connectionObject.Disconnect = function()
+		if (not connectionObject.Connected) then
+				return;
+		end;
+		connectionObject.Connected = false;
+		table_remove( self.connections, table_find(self.connections, _function) );
+	end;
 
-      table_insert(self.connections, _function);
-      return connectionObject;
+	table_insert(self.connections, _function);
+	return connectionObject;
 end;
 function signalHandler:Remove()
-      if (not self.active) then
-            return;
-      end;
-      self.active = false;
-      self.connections = {};
+	if (not self.active) then
+		return;
+	end;
+	self.active = false;
+	self.connections = {};
 
-      if (self.signalConnection) then
-            self.signalConnection:Disconnect();
-      end;
+	if (self.signalConnection) then
+		self.signalConnection:Disconnect();
+	end;
 end;
 
 return signalHandler;

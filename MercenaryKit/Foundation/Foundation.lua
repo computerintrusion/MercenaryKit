@@ -31,30 +31,49 @@ end
 
 local executor = (type(identifyexecutor) == 'function' and identifyexecutor) or 'unknown executor'; 
 
---[[create the import function]]
-getgenv().frameworkImport = function(file, ...)
-	local gitPath = `https://github.com/computerintrusion/MercenaryKit/raw/main/MercenaryKit/{file}`;
-    local success, response = pcall(request, { Url = gitPath, Method = 'GET' });
+--[[create the import function 
+    only if it hasn't been made before]]
+getgenv().frameworkimport = (type(getgenv().frameworkimport) == 'function' and getgenv().frameworkimport) or function(file, ...)
+    local gitPath = `https://github.com/computerintrusion/MercenaryKit/raw/main/MercenaryKit/{file}`;
+
+    local success, response = pcall(request, {
+        Url = gitPath,
+        Method = "GET"
+    });
+
     if (not success) then
-		return warn(`frameworkImport failed (1) - request error\nurl: {gitPath}`);
-	elseif (type(response.Body) ~= 'string' or response.StatusCode ~= 200) then
-        return warn(`frameworkImport failed (2) - bad response\nurl: {gitPath}`);
+        return warn(`frameworkimport failed (1) - request error\nurl: {gitPath}`);
+    elseif (type(response.Body) ~= "string" or response.StatusCode ~= 200) then
+        return warn(`frameworkimport failed (2) - bad response\nurl: {gitPath}`);
     end
 
-    local loader = loadstring(response.Body);
+    local loader, err = loadstring(response.Body);
     if (not loader) then
-        return warn(`frameworkImport failed (3) - syntax error\n\nurl: {gitPath}`);
+        return warn(`frameworkimport failed (3) - syntax error\n{err}\nurl: {gitPath}`);
     end
 
     return loader(...);
 end
 
 --[[setup foundation class]]
-local foundation = {};
+local foundation = { 
+    utilities = {} 
+};
 
-foundation.serviceManager   = frameworkImport('Foundation/ServiceManager.lua');
-foundation.hookManager      = frameworkImport('Foundation/HookManager.lua');
-foundation.kickManager      = frameworkImport('Foundation/KickManager.lua');
+--[[
+    commonly used frameworks
+]]
+foundation.serviceManager   = frameworkimport('Foundation/ServiceManager.lua');
+foundation.hookManager      = frameworkimport('Foundation/HookManager.lua');
+foundation.kickManager      = frameworkimport('Foundation/KickManager.lua');
+
+--[[
+    pass new to these ourselves (includes signal but not hash)
+    local maid = foundation.utilities.maid.new();
+]]
+foundation.utilities.maid       = frameworkimport('Utilities/MaidHandler.lua');
+foundation.utilities.signal     = frameworkimport('Utilities/SignalHandler.lua');
+foundation.utilities.hash       = frameworkimport('Utilities/HashModule.lua');  -- this is the biggest issue currently, loading very large utility modules is very hefty and takes up time, this alone adds + 0.5 seconds to the total loading time
 
 --[[setup simple foundation helper functions]]
 --[[no reason to have a separate file for this]]
@@ -65,7 +84,8 @@ function foundation:protectedMessagebox(body, title, id)
         return output;
     end
 
-    return self.kickManager:kick(`messagebox failed - {tostring(body)} | err: {tostring(output)}`);
+    local message = `messagebox failed - {tostring(body)} | err: {tostring(output)}`;
+    return self.kickManager.kick and self.kickManager:kick(message) or warn(message);
 end
 
 function foundation:protectedLoad(url, ...)
