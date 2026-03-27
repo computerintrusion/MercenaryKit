@@ -32,7 +32,7 @@ end
 local executor = (type(identifyexecutor) == 'function' and identifyexecutor) or 'unknown executor'; 
 
 --[[create the import function]]
-getgenv().frameworkImport = function(file)
+getgenv().frameworkImport = function(file, ...)
     local gitPath = `https://github.com/computerintrusion/MercenaryX/raw/refs/heads/main/MercenaryKit/{file}`;
 
     local success, response = pcall(request, { Url = gitPath, Method = 'GET' });
