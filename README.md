@@ -16,3 +16,9 @@ notes (information for skids or contributers):
 **TODO (number one priority currently)**:
   - implement a 'compile' method, so instead of using 'Foundation/Foundation.lua', which imports files from the github itself, it compiles the entire project into one usable file which i can add to Releases.  i have found a way of doing this, just need to implement it properly, until then i won't be using it.
   - not only will this make it faster, but also more easily manageable in the end.
+
+simple usage example:
+  - if this framework gets big, i eventually will create a docs for it. for now, here is an example.
+  ```lua
+      --placeholder
+  ```
