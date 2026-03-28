@@ -38,13 +38,9 @@ function hookManager:registerHook(hookName, hookData)
 	end
 
 	local originalFunction = nil;
-
-	local function wrappedReplacement(...)
-		if (not islclosure(originalFunction) or iscclosure(originalFunction)) then
-			return originalFunction(...);
-		end
-
-		return hookData.replacement(originalFunction, ...);
+			
+	 local function wrappedReplacement(...)
+		return hookData.replacement(originalFunction, ...)
 	end
 
 	originalFunction = hookfunction(hookData.target, wrappedReplacement);
