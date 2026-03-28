@@ -19,7 +19,14 @@
 ]]
 
 
-local sourceDirectory = "MercenaryKit/";
+local function getScriptDirectory()
+    local info = debug.getinfo(1, "S");
+    local path = info.source:sub(2);
+    path = path:gsub("\\", "/");
+    return path:match("(.*/)");
+end;
+
+local sourceDirectory = getScriptDirectory() or "./";
 local outputFileName = "MercenaryKit.lua";
 
 local included = {};
@@ -155,12 +162,8 @@ local function build()
     local compiled = resolve(mainFile);
     compiled = normalize(compiled);
 
-    local header = [[
--- This file was generated using the MercenaryKit compiler v1.0.0
-
-]];
-
-    writefile(outputFileName, header .. " " .. compiled);
+    local header = "-- This file was generated using the MercenaryKit compiler v1.0.0";
+    writefile(outputFileName, string.format("%s\n\n%s", header, compiled));
 
     local elapsed = os.clock() - startTime;
 

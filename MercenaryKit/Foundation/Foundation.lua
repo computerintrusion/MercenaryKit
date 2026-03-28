@@ -24,8 +24,7 @@ end
 
 local executor = (type(identifyexecutor) == 'function' and identifyexecutor) or 'unknown executor'; 
 
---[[create the import function 
-    only if it hasn't been made before]]
+--[[create the import function only if it hasn't been made before]]
 getgenv().frameworkimport = (type(getgenv().frameworkimport) == 'function' and getgenv().frameworkimport) or function(file, ...)
     local gitPath = `https://github.com/computerintrusion/MercenaryKit/raw/main/MercenaryKit/{file}`;
 
