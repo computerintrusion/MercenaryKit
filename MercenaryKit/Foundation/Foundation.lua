@@ -22,10 +22,17 @@ elseif (type(loadstring) ~= 'function') then
     return warn(`[MercenaryKit] missing critical alias 'loadstring' - unsupported executor`);
 end
 
-local executor = (type(identifyexecutor) == 'function' and identifyexecutor) or 'unknown executor'; 
+local executor = (type(identifyexecutor) == 'function' and identifyexecutor()) or 'unknown executor'; 
 
 --[[create the import function only if it hasn't been made before]]
-getgenv().frameworkimport = (type(getgenv().frameworkimport) == 'function' and getgenv().frameworkimport) or function(file, ...)
+getgenv().frameworkcache    = getgenv().frameworkcache or {};
+getgenv().frameworkimport   = getgenv().frameworkimport or function(file, ...)
+    local cache = getgenv().frameworkcache;
+
+    if (cache[file]) then
+        return cache[file];
+    end
+
     local gitPath = `https://github.com/computerintrusion/MercenaryKit/raw/main/MercenaryKit/{file}`;
 
     local success, response = pcall(request, {
@@ -44,13 +51,17 @@ getgenv().frameworkimport = (type(getgenv().frameworkimport) == 'function' and g
         return warn(`frameworkimport failed (3) - syntax error\n{err}\nurl: {gitPath}`);
     end
 
-    return loader(...);
+    local result = loader(...);
+    cache[file] = result;
+
+    return result;
 end
 
 --[[setup foundation class]]
-local foundation = { 
-    utilities = {} 
-};
+local foundation = {};
+
+foundation.utilities = {}
+foundation.__index = foundation;
 
 --[[
     commonly used frameworks
@@ -58,6 +69,11 @@ local foundation = {
 foundation.serviceManager   = frameworkimport('Foundation/ServiceManager.lua');
 foundation.hookManager      = frameworkimport('Foundation/HookManager.lua');
 foundation.kickManager      = frameworkimport('Foundation/KickManager.lua');
+
+--[[
+    enhancements
+]]
+-- foundation.drawingManager   = frameworkimport('Enhancements/DrawingManager.lua');
 
 --[[
     pass new to these ourselves (includes signal but not hash)

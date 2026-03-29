@@ -7,7 +7,7 @@ local cloneref, clonefunction = cloneref, clonefunction;
 
 local game, getService = game, (type(clonefunction) == 'function' and clonefunction(game.GetService));
 
---[[executor support check]]
+--[[check if executor supports required functions]]
 if (type(cloneref) ~= 'function') then
     return warn(`[MercenaryKit] missing critical alias 'cloneref' - unsupported executor`);
 elseif (type(clonefunction) ~= 'function') then
@@ -17,6 +17,7 @@ end
 -- [[setup serviceManager class]]
 local serviceManager = {};
 
+serviceManager.__index = serviceManager;
 serviceManager.cachedServices = {};
 
 --[[manual service loading]]

@@ -7,7 +7,7 @@ local cloneref, gethui = cloneref, gethui;
 local taskspawn, taskwait = task.spawn, task.wait;
 local warn = warn;
 
---[[executor support check]]
+--[[check if executor supports required functions]]
 if (type(cloneref) ~= 'function') then
     return warn(`[MercenaryKit] missing critical alias 'cloneref' - unsupported executor`);
 elseif (type(gethui) ~= 'function') then
@@ -24,6 +24,8 @@ end
 
 --[[setup class kickManager]]
 local kickManager = {};
+
+kickManager.__index = kickManager;
 
 kickManager.isKicked = false;
 kickManager.baseTitle = "MercenaryKit::KickManager";

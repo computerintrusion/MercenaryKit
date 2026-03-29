@@ -28,6 +28,7 @@ end
 --[[setup hookManager class]]
 local hookManager = {};
 
+hookManager.__index = hookManager;
 hookManager.hookCache = {};
 
 function hookManager:registerHook(hookName, hookData)
@@ -37,9 +38,9 @@ function hookManager:registerHook(hookName, hookData)
 		return hookInfo.originalFunction;
 	end
 
-	local originalFunction = nil;
-			
-	 local function wrappedReplacement(...)
+	local originalFunction;
+
+	local function wrappedReplacement(...)
 		return hookData.replacement(originalFunction, ...)
 	end
 
