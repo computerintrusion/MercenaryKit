@@ -85,6 +85,50 @@ foundation.utilities.hash       = frameworkimport('Utilities/HashModule.lua');  
 
 --[[setup simple foundation helper functions]]
 --[[no reason to have a separate file for this]]
+function foundation:getGameName()
+    local marketplaceService = self.serviceManager.MarketplaceService;
+    local placeId = game.PlaceId;
+
+	local success, info = pcall(function()
+		return marketplaceService:GetProductInfo(placeId);
+	end)
+
+	if ( success and info and info.Name ) then
+		return info.Name;
+	end
+
+	return game.Name;
+end
+
+function foundation:getLocalPlayer()
+    local players = self.serviceManager.Players;
+    return players.LocalPlayer;
+end
+
+function foundation:getCharacter()
+    local localPlayer = self:getLocalPlayer()
+    if (localPlayer) then
+        return localPlayer.Character or localPlayer.CharacterAdded:Wait();
+    end
+    return nil;
+end
+
+function foundation:getHumanoid()
+    local character = self:getCharacter();
+    if (character) then
+        return character:FindFirstChildOfClass("Humanoid");
+    end
+    return nil;
+end
+
+function foundation:getHumanoidRootPart()
+    local character = self:getCharacter()
+    if (character) then
+        return character:FindFirstChild("HumanoidRootPart");
+    end
+    return nil;
+end
+
 function foundation:protectedMessagebox(body, title, id)
     local success, output = pcall(messagebox, body, title, id);
 
